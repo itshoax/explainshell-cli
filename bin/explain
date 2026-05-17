@@ -1,0 +1,21 @@
+#!/bin/bash
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+SCRIPT_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+VENV_PYTHON="$SCRIPT_DIR/../.venv/bin/python3"
+PYTHON_SCRIPT="$SCRIPT_DIR/../src/main.py"
+
+if [ -z "$1" ]; then
+    echo "Usage: explain <command>"
+    exit 1
+fi
+
+USER_COMMAND="$*"
+
+"$VENV_PYTHON" "$PYTHON_SCRIPT" "$USER_COMMAND"
